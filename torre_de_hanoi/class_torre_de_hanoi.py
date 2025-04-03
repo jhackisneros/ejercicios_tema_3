@@ -1,33 +1,26 @@
-from torre_de_hanoi.class_torre_de_hanoi import TorreDeHanoi
+class PuzzlePiramide:
+    def __init__(self, num_piedras=74):
+        self.num_piedras = num_piedras
+        self.movimientos = []
+    
+    def resolver(self, origen='Columna A', destino='Columna B', auxiliar='Columna C'):
+        """Inicia la solución del puzzle"""
+        self._mover_piedras(self.num_piedras, origen, destino, auxiliar)
+        return self.movimientos
+    
+    def _mover_piedras(self, n, origen, destino, auxiliar):
+        """Método recursivo interno"""
+        if n == 1:
+            self.movimientos.append(f"Mover piedra 1 de {origen} a {destino}")
+            return
+        
+        self._mover_piedras(n-1, origen, auxiliar, destino)
+        self.movimientos.append(f"Mover piedra {n} de {origen} a {destino}")
+        self._mover_piedras(n-1, auxiliar, destino, origen)
 
 if __name__ == "__main__":
-    hanoi = TorreDeHanoi(74)
-    hanoi.mover_piedras(74, 'Columna A', 'Columna B', 'Columna C')
-    hanoi.imprimir_resultados()
-
-class TorreDeHanoi:
-    def __init__(self, n):
-        self.n = n
-        self.movimientos = []
-
-    def mover_piedras(self, n, origen, auxiliar, destino):
-        stack = [(n, origen, auxiliar, destino)]
-        while stack:
-            n, origen, auxiliar, destino = stack.pop()
-            if n == 1:
-                self.movimientos.append((origen, destino))
-            else:
-                stack.append((n-1, auxiliar, origen, destino))
-                stack.append((1, origen, auxiliar, destino))
-                stack.append((n-1, origen, destino, auxiliar))
-
-    def obtener_movimientos(self):
-        return self.movimientos
-
-    def obtener_numero_movimientos(self):
-        return 2**self.n - 1
-
-    def imprimir_resultados(self):
-        print("Movimientos (primeros 10):", self.obtener_movimientos()[:10])
-        print("Número total de movimientos necesarios:", self.obtener_numero_movimientos())
-
+    # Ejecución directa del módulo para pruebas
+    puzzle = PuzzlePiramide(3)  # Ejemplo con 3 piedras
+    movimientos = puzzle.resolver()
+    for movimiento in movimientos:
+        print(movimiento)

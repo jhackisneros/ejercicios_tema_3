@@ -1,53 +1,36 @@
 from torre_de_hanoi.class_torre_de_hanoi import PuzzlePiramide
-from cifra_magica import matriz
+from cifra_magica.matriz import CalculadoraDeterminante
 from carrera_espacial.naves import NaveEspacial, GestorNaves
+from grimorio_matematico.polinomio import PolinomioMagico
 
 
 def resolver_torre_de_hanoi():
-    # Crear instancia con 74 piedras
+    """Resuelve el problema de la Torre de Hanoi."""
     piramide_egipcia = PuzzlePiramide(74)
-    
-    # Resolver el puzzle
     solucion = piramide_egipcia.resolver()
-    
-    # Mostrar los primeros 5 movimientos como ejemplo
-    print("Primeros 5 movimientos:")
-    for movimiento in solucion[:5]:
-        print(movimiento)
-    
-    print(f"\nTotal de movimientos requeridos: {len(solucion)}")
+    return solucion
 
 
 def resolver_cifra_magica():
-    # Matriz del libro antiguo (3x3)
+    """Calcula la cifra mágica usando determinantes."""
     matriz_magica = [
         [2, 0, 1],
         [3, 4, 5],
         [1, 6, 7]
     ]
-    
-    # Crear calculadora
     calculadora = CalculadoraDeterminante(matriz_magica)
-    
-    # Calcular determinantes
     resultado_recursivo = calculadora.metodo_recursivo()
     resultado_iterativo = calculadora.metodo_iterativo()
-    
-    # Revelar el secreto
-    secretos = {
+    return {
         "determinante_recursivo": resultado_recursivo,
         "determinante_iterativo": resultado_iterativo,
-        "cifra_magica": resultado_recursivo  # Ambos métodos deben coincidir
+        "cifra_magica": resultado_recursivo
     }
-    
-    print("Secretos revelados del libro antiguo:")
-    print(f"• Determinante recursivo: {secretos['determinante_recursivo']}")
-    print(f"• Determinante iterativo: {secretos['determinante_iterativo']}")
-    print(f"¡La cifra mágica es: {secretos['cifra_magica']}!")
 
 
-def cargar_datos_naves():
-    return [
+def analizar_naves():
+    """Analiza las naves espaciales."""
+    naves = [
         NaveEspacial("Cometa Veloz", 120, 5, 15),
         NaveEspacial("Titán del Cosmos", 300, 20, 50),
         NaveEspacial("GX-2000", 80, 3, 8),
@@ -55,53 +38,66 @@ def cargar_datos_naves():
         NaveEspacial("Estrella Fugaz", 90, 4, 10),
         NaveEspacial("Neptuno Viajero", 200, 12, 30)
     ]
-
-
-def analizar_naves():
-    # Configuración inicial
-    naves = cargar_datos_naves()
     gestor = GestorNaves(naves)
-    
-    # Ejecutar todos los análisis
-    resultados = {
+    return {
         "ordenadas": gestor.ordenar_naves(),
-        "naves_especificas": gestor.buscar_por_nombre(
-            "Cometa Veloz", "Titán del Cosmos"),
+        "naves_especificas": gestor.buscar_por_nombre("Cometa Veloz", "Titán del Cosmos"),
         "top_pasajeros": gestor.top_pasajeros(),
         "max_tripulacion": gestor.max_tripulacion(),
         "prefijo_gx": gestor.filtrar_prefijo("GX"),
         "pasajeros_6+": gestor.filtrar_pasajeros(),
         "extremos": gestor.extremos_longitud()
     }
-    
-    return resultados
+
+
+def ejemplo_polinomios():
+    """Ejemplo de operaciones con polinomios mágicos."""
+    p1 = PolinomioMagico([(3, 2), (-1, 1), (5, 0)])  # 3x² - x + 5
+    p2 = PolinomioMagico([(2, 2), (4, 1)])           # 2x² + 4x
+    resta = p1.restar(p2)
+    p3 = PolinomioMagico([(1, 3), (6, 2), (11, 1), (6, 0)])  # x³ + 6x² + 11x + 6
+    p4 = PolinomioMagico([(1, 1), (1, 0)])                   # x + 1
+    cociente, resto = p3.dividir(p4)
+    return {
+        "resta": resta,
+        "cociente": cociente,
+        "resto": resto,
+        "p1_sin_x2": p1,
+        "p3_contiene_x3": p3.contiene_termino(3)
+    }
+
+
+def main():
+    """Función principal para ejecutar el programa."""
+    print("=== Torre de Hanoi ===")
+    movimientos = resolver_torre_de_hanoi()
+    print("Primeros 5 movimientos:", movimientos[:5])
+    print(f"Total de movimientos: {len(movimientos)}\n")
+
+    print("=== Cifra Mágica ===")
+    secretos = resolver_cifra_magica()
+    print("Determinante recursivo:", secretos["determinante_recursivo"])
+    print("Determinante iterativo:", secretos["determinante_iterativo"])
+    print("Cifra mágica:", secretos["cifra_magica"], "\n")
+
+    print("=== Análisis de Naves ===")
+    naves = analizar_naves()
+    print("Naves ordenadas:", naves["ordenadas"])
+    print("Naves específicas:", naves["naves_especificas"])
+    print("Top 5 naves por pasajeros:", naves["top_pasajeros"])
+    print("Nave con mayor tripulación:", naves["max_tripulacion"])
+    print("Naves con prefijo GX:", naves["prefijo_gx"])
+    print("Naves con 6+ pasajeros:", naves["pasajeros_6+"])
+    print("Extremos de longitud:", naves["extremos"], "\n")
+
+    print("=== Polinomios Mágicos ===")
+    polinomios = ejemplo_polinomios()
+    print("Resta de polinomios:", polinomios["resta"])
+    print("Cociente:", polinomios["cociente"])
+    print("Resto:", polinomios["resto"])
+    print("Polinomio p1 sin x²:", polinomios["p1_sin_x2"])
+    print("¿p3 contiene x³?:", polinomios["p3_contiene_x3"])
+
 
 if __name__ == "__main__":
-    datos = main()
-    
-    print("=== Naves ordenadas ===")
-    for nave in datos["ordenadas"]:
-        print(nave)
-    
-    print("\n=== Naves específicas ===")
-    for nave in datos["naves_especificas"]:
-        print(nave)
-    
-    print("\n=== Top 5 naves por pasajeros ===")
-    for nave in datos["top_pasajeros"]:
-        print(nave)
-    
-    print("\n=== Nave con mayor tripulación ===")
-    print(datos["max_tripulacion"])
-    
-    print("\n=== Naves con prefijo GX ===")
-    for nave in datos["prefijo_gx"]:
-        print(nave)
-    
-    print("\n=== Naves con 6+ pasajeros ===")
-    for nave in datos["pasajeros_6+"]:
-        print(nave)
-    
-    print("\n=== Extremos de longitud ===")
-    print("Más pequeña:", datos["extremos"][0])
-    print("Más grande:", datos["extremos"][1])
+    main()

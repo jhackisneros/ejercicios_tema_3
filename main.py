@@ -6,7 +6,7 @@ from grimorio_matematico.polinomio import PolinomioMagico
 
 def resolver_torre_de_hanoi():
     """Resuelve el problema de la Torre de Hanoi."""
-    piramide_egipcia = PuzzlePiramide(74)
+    piramide_egipcia = PuzzlePiramide(3)  # Cambia el número de piedras si es necesario
     solucion = piramide_egipcia.resolver()
     return solucion
 

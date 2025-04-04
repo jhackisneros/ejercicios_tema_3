@@ -1,3 +1,6 @@
+#Read me 
+https://github.com/jhackisneros/ejercicios_tema_3.git
+
 # ejercicios_tema_3
 ## Proyecto: ejercicios_tema_3
 
